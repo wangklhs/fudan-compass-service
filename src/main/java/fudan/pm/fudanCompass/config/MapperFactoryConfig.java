@@ -1,5 +1,6 @@
 package fudan.pm.fudanCompass.config;
 
+import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.ArticleRequest;
 import fudan.pm.fudanCompass.entity.Article;
@@ -30,6 +31,11 @@ public class MapperFactoryConfig {
         mapperFactory.classMap(Article.class, ArticleOutputDto.class)
                 .fieldMap("tags", "tags").converter("tagsConverter").add()
                 .fieldMap("comments", "comments").converter("commentsTrimConverter").add()
+                .byDefault()
+                .register();
+
+        mapperFactory.classMap(Article.class, ArticleDetailsDto.class)
+                .fieldMap("tags", "tags").converter("tagsConverter").add()
                 .byDefault()
                 .register();
 

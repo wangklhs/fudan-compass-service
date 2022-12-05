@@ -1,5 +1,6 @@
 package fudan.pm.fudanCompass.service;
 
+import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.ArticleRequest;
 import fudan.pm.fudanCompass.dto.SearchArticlesRequest;
@@ -60,11 +61,8 @@ public class ArticleService {
                 .map(a -> mapperFacade.map(a, ArticleOutputDto.class));
     }
 
-    public ArticleOutputDto getDetails(Long id) {
-        return articleRepository.findById(id).map(a -> {
-            ArticleOutputDto dto = mapperFacade.map(a, ArticleOutputDto.class);
-            return dto;
-        }).orElse(null);
+    public ArticleDetailsDto getDetails(Long id) {
+        return articleRepository.findById(id).map(a -> mapperFacade.map(a, ArticleDetailsDto.class)).orElse(null);
     }
 
     public void post(ArticleRequest request) {
