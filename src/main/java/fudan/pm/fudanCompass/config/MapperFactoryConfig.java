@@ -52,7 +52,7 @@ public class MapperFactoryConfig {
 
         @Override
         public String convertTo(List<String> strings, Type<String> type, MappingContext mappingContext) {
-            return strings.stream().filter(Objects::nonNull).collect(Collectors.joining(","));
+            return String.join(",", strings);
         }
 
         @Override

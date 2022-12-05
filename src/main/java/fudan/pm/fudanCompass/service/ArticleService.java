@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.criteria.Predicate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,17 +63,14 @@ public class ArticleService {
 
     public void post(ArticleRequest request) {
         Article article = mapperFacade.map(request, Article.class);
-        article.setLikeNum(0L);
-        article.setCreateTime(LocalDateTime.now());
-        article.setUpdateTime(LocalDateTime.now());
         articleRepository.save(article);
     }
 
     public void update(Long id, ArticleRequest request) {
-        Article article = mapperFacade.map(request, Article.class);
-        article.setId(id);
-        article.setUpdateTime(LocalDateTime.now());
-        articleRepository.save(article);
+       articleRepository.findById(id).ifPresent((a) -> {
+            a.update(request);
+            articleRepository.save(a);
+        });
     }
 
 
