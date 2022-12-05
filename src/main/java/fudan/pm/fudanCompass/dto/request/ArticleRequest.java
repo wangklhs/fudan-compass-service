@@ -1,4 +1,4 @@
-package fudan.pm.fudanCompass.dto;
+package fudan.pm.fudanCompass.dto.request;
 
 import lombok.Data;
 

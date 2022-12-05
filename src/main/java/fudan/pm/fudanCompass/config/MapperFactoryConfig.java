@@ -2,7 +2,7 @@ package fudan.pm.fudanCompass.config;
 
 import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
-import fudan.pm.fudanCompass.dto.ArticleRequest;
+import fudan.pm.fudanCompass.dto.request.ArticleRequest;
 import fudan.pm.fudanCompass.entity.Article;
 import fudan.pm.fudanCompass.entity.Comment;
 import ma.glasnost.orika.MapperFacade;
@@ -23,24 +23,25 @@ import java.util.stream.Collectors;
 public class MapperFactoryConfig {
 
     @Bean
+    //统一配置映射关系
     public MapperFacade mapperFacade() {
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-        mapperFactory.getConverterFactory().registerConverter("tagsConverter", new StringListConverter());
+        mapperFactory.getConverterFactory().registerConverter("stringListConverter", new StringListConverter());
         mapperFactory.getConverterFactory().registerConverter("commentsTrimConverter", new CommentListConverter());
 
         mapperFactory.classMap(Article.class, ArticleOutputDto.class)
-                .fieldMap("tags", "tags").converter("tagsConverter").add()
+                .fieldMap("tags", "tags").converter("stringListConverter").add()
                 .fieldMap("comments", "comments").converter("commentsTrimConverter").add()
                 .byDefault()
                 .register();
 
         mapperFactory.classMap(Article.class, ArticleDetailsDto.class)
-                .fieldMap("tags", "tags").converter("tagsConverter").add()
+                .fieldMap("tags", "tags").converter("stringListConverter").add()
                 .byDefault()
                 .register();
 
         mapperFactory.classMap(ArticleRequest.class, Article.class)
-                .fieldMap("tags", "tags").converter("tagsConverter").add()
+                .fieldMap("tags", "tags").converter("stringListConverter").add()
                 .byDefault()
                 .register();
 

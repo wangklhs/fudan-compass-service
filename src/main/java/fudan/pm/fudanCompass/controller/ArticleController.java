@@ -2,9 +2,8 @@ package fudan.pm.fudanCompass.controller;
 
 import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
-import fudan.pm.fudanCompass.dto.ArticleRequest;
-import fudan.pm.fudanCompass.dto.SearchArticlesRequest;
-import fudan.pm.fudanCompass.entity.Article;
+import fudan.pm.fudanCompass.dto.request.ArticleRequest;
+import fudan.pm.fudanCompass.dto.request.SearchArticlesRequest;
 import fudan.pm.fudanCompass.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

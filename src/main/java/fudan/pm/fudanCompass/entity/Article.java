@@ -1,13 +1,10 @@
 package fudan.pm.fudanCompass.entity;
 
-import fudan.pm.fudanCompass.dto.ArticleRequest;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Data
 @Entity

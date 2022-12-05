@@ -2,12 +2,11 @@ package fudan.pm.fudanCompass.service;
 
 import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
-import fudan.pm.fudanCompass.dto.ArticleRequest;
-import fudan.pm.fudanCompass.dto.SearchArticlesRequest;
+import fudan.pm.fudanCompass.dto.request.ArticleRequest;
+import fudan.pm.fudanCompass.dto.request.SearchArticlesRequest;
 import fudan.pm.fudanCompass.entity.Article;
 import fudan.pm.fudanCompass.repository.ArticleRepository;
 import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,10 +16,8 @@ import org.springframework.util.ObjectUtils;
 
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -69,6 +66,7 @@ public class ArticleService {
         Article article = mapperFacade.map(request, Article.class);
         article.setLikeNum(0L);
         article.setCreateTime(LocalDateTime.now());
+        article.setUpdateTime(LocalDateTime.now());
         articleRepository.save(article);
     }
 
