@@ -16,6 +16,7 @@
         <log4j.version>1.2.17</log4j.version>
         <mysql.version>8.0.18</mysql.version>
         <orika.version>1.5.4</orika.version>
+        <swagger.version>3.0.0</swagger.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -80,6 +81,11 @@
             <groupId>ma.glasnost.orika</groupId>
             <artifactId>orika-core</artifactId>
             <version>${orika.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
