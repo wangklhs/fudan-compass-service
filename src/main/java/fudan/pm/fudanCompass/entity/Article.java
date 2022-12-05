@@ -1,10 +1,13 @@
 package fudan.pm.fudanCompass.entity;
 
+import fudan.pm.fudanCompass.dto.ArticleRequest;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -19,14 +22,10 @@ public class Article {
     @Column(columnDefinition = "text")
     private String content;
 
+    private String tags;
     private Long likeNum;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-
-    @OneToMany
-    @JoinTable(name = "article_tag",
-            joinColumns = {@JoinColumn(name = "article_id")}, inverseJoinColumns = {@JoinColumn(name = "tag_id")})
-    private List<Tag> tags;
 
     @OneToMany
     @JoinTable(name = "article_comment",

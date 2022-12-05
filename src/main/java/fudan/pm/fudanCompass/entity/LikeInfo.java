@@ -20,5 +20,4 @@ public class LikeInfo {
     private Long commentId;
     private Boolean isLike;
 
-
 }
