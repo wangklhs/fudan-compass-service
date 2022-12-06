@@ -2,6 +2,7 @@ package fudan.pm.fudanCompass.controller;
 
 import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
+import fudan.pm.fudanCompass.dto.request.ArticleDetailsRequest;
 import fudan.pm.fudanCompass.dto.request.ArticleRequest;
 import fudan.pm.fudanCompass.dto.request.SearchArticlesRequest;
 import fudan.pm.fudanCompass.service.ArticleService;
@@ -24,9 +25,9 @@ public class ArticleController {
         return articleService.search(request);
     }
 
-    @GetMapping("/{id}")
-    public ArticleDetailsDto getDetails(@PathVariable("id") Long id) {
-        return articleService.getDetails(id);
+    @PostMapping("/detail")
+    public ArticleDetailsDto getDetails(@RequestBody ArticleDetailsRequest request) {
+        return articleService.getDetails(request);
     }
 
     @PostMapping

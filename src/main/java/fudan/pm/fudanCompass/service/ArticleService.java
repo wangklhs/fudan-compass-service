@@ -2,10 +2,13 @@ package fudan.pm.fudanCompass.service;
 
 import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
+import fudan.pm.fudanCompass.dto.request.ArticleDetailsRequest;
 import fudan.pm.fudanCompass.dto.request.ArticleRequest;
 import fudan.pm.fudanCompass.dto.request.SearchArticlesRequest;
 import fudan.pm.fudanCompass.entity.Article;
+import fudan.pm.fudanCompass.entity.LikeInfo;
 import fudan.pm.fudanCompass.repository.ArticleRepository;
+import fudan.pm.fudanCompass.repository.LikeInfoRepository;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +28,8 @@ public class ArticleService {
     MapperFacade mapperFacade;
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    LikeInfoRepository likeInfoRepository;
 
     public Page<ArticleOutputDto> search(SearchArticlesRequest request) {
         Specification<Article> specification = (root, query, cb) -> {
@@ -57,8 +62,28 @@ public class ArticleService {
                 .map(a -> mapperFacade.map(a, ArticleOutputDto.class));
     }
 
-    public ArticleDetailsDto getDetails(Long id) {
-        return articleRepository.findById(id).map(a -> mapperFacade.map(a, ArticleDetailsDto.class)).orElse(null);
+    public ArticleDetailsDto getDetails(ArticleDetailsRequest request) {
+        return articleRepository.findById(request.getArticleId()).map(a ->
+        {
+            ArticleDetailsDto detailsDto = mapperFacade.map(a, ArticleDetailsDto.class);
+            if (ObjectUtils.isEmpty(request.getUserId())) return detailsDto;
+            LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndTypeAndUserIdAndIsCancelled(
+                    request.getArticleId(), LikeInfo.ARTICLE_TYPE, request.getUserId(), false);
+            if (!ObjectUtils.isEmpty(likeInfo)) {
+                switch (likeInfo.getLikeType()) {
+                    case LikeInfo.LIKE:
+                        detailsDto.setIsLikedByUser(true);
+                        break;
+                    case LikeInfo.FAVOR:
+                        detailsDto.setIsFavouredByUser(true);
+                        break;
+                    case LikeInfo.LIKE_AND_FAVOR:
+                        detailsDto.setIsLikedByUser(true);
+                        detailsDto.setIsFavouredByUser(true);
+                }
+            }
+            return detailsDto;
+        }).orElse(null);
     }
 
     public void post(ArticleRequest request) {

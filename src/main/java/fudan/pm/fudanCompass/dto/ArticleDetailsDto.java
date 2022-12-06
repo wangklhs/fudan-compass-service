@@ -24,4 +24,7 @@ public class ArticleDetailsDto {
 
     private List<Comment> comments;
 
+    private Boolean isLikedByUser = false;
+    private Boolean isFavouredByUser = false;
+
 }
