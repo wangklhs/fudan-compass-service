@@ -7,7 +7,7 @@ public class CommentRequest {
 
     private Long id;
     private Long userId;
-    private Integer commentType;
+    private Integer commentType; //0 article 1 rating
     private String content;
 
 }

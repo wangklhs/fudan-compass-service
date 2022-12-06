@@ -19,16 +19,13 @@ public class Comment {
     @Column(columnDefinition = "text")
     private String content;
 
-    @Column(columnDefinition = "bigint default 0")
-    private Long likeNum;
+    private Long likeNum = 0L;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP")
-    private LocalDateTime createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime = LocalDateTime.now();
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP")
-    private LocalDateTime updateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime = LocalDateTime.now();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

@@ -41,9 +41,4 @@ public class ArticleController {
         articleService.update(id, request);
     }
 
-    @GetMapping("/like")
-    public void like() {
-
-    }
-
 }

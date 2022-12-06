@@ -3,6 +3,7 @@ package fudan.pm.fudanCompass.service;
 import fudan.pm.fudanCompass.dto.request.CommentRequest;
 import fudan.pm.fudanCompass.entity.Article;
 import fudan.pm.fudanCompass.entity.Comment;
+import fudan.pm.fudanCompass.entity.LikeInfo;
 import fudan.pm.fudanCompass.entity.Rating;
 import fudan.pm.fudanCompass.repository.ArticleRepository;
 import fudan.pm.fudanCompass.repository.CommentRepository;
@@ -27,7 +28,7 @@ public class CommentService {
     public void post(CommentRequest request) throws Exception {
         Comment comment = mapperFacade.map(request, Comment.class);
         comment.setId(null);
-        if (ObjectUtils.isEmpty(request.getCommentType()) || request.getCommentType() == 0) {
+        if (ObjectUtils.isEmpty(request.getCommentType()) || request.getCommentType() == LikeInfo.ARTICLE_TYPE) {
             Article article = articleRepository.findById(request.getId()).orElseThrow(Exception::new); //异常处理
             comment.setArticle(article);
         } else {

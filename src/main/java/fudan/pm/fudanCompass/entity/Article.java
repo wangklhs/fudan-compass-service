@@ -22,14 +22,9 @@ public class Article {
     @Column(columnDefinition = "text")
     private String content;
 
-    @Column(columnDefinition = "bigint default 0")
-    private Long likeNum;
-
-    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP")
-    private LocalDateTime createTime;
-
-    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP")
-    private LocalDateTime updateTime;
+    private Long likeNum = 0L;
+    private LocalDateTime createTime = LocalDateTime.now();
+    private LocalDateTime updateTime = LocalDateTime.now();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "article_comment",

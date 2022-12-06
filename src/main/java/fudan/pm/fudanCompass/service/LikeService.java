@@ -46,7 +46,7 @@ public class LikeService {
 
     private void updateLikeNum(Long id, int likeType, int inc) throws Exception {
         if (inc != 0) {
-            if (likeType == 0) {
+            if (likeType == LikeInfo.ARTICLE_TYPE) {
                 Article a = articleRepository.findById(id).orElseThrow(Exception::new);
                 a.setLikeNum(a.getLikeNum() + inc);
                 articleRepository.save(a);

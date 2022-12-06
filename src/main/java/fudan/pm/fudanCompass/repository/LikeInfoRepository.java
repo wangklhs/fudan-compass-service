@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikeInfoRepository extends JpaRepository<LikeInfo, Long> {
 
-    LikeInfo findFirstByLikeIdAndLikeTypeAndUserIdAndIsCancelled(Long likeId, Integer likeType, Long userId, Boolean isCancelled);
+    LikeInfo findFirstByLikeIdAndLikeTypeAndUserId(Long likeId, Integer likeType, Long userId);
 
     LikeInfo findFirstByLikeIdAndUserId(Long likeId, Long userId);
 }
