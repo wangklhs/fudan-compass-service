@@ -3,8 +3,10 @@ package fudan.pm.fudanCompass.config;
 import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.request.ArticleRequest;
+import fudan.pm.fudanCompass.dto.request.LikeRequest;
 import fudan.pm.fudanCompass.entity.Article;
 import fudan.pm.fudanCompass.entity.Comment;
+import fudan.pm.fudanCompass.entity.LikeInfo;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
@@ -41,6 +43,11 @@ public class MapperFactoryConfig {
 
         mapperFactory.classMap(ArticleRequest.class, Article.class)
                 .fieldMap("tags", "tags").converter("stringListConverter").add()
+                .byDefault()
+                .register();
+
+        mapperFactory.classMap(LikeRequest.class, LikeInfo.class)
+                .field("id", "likeId")
                 .byDefault()
                 .register();
 

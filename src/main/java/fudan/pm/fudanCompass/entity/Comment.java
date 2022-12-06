@@ -15,8 +15,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long userId;
-    //如果是评论的评论，该字段指向被评论的id
-    private Long parentId;
 
     @Column(columnDefinition = "text")
     private String content;
@@ -37,5 +35,11 @@ public class Comment {
     @JoinTable(name = "article_comment",
             joinColumns = {@JoinColumn(name = "comment_id")}, inverseJoinColumns = {@JoinColumn(name = "article_id")})
     private Article article;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "rating_comment",
+            joinColumns = {@JoinColumn(name = "comment_id")}, inverseJoinColumns = {@JoinColumn(name = "rating_id")})
+    private Rating rating;
 
 }

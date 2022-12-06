@@ -66,11 +66,12 @@ public class ArticleService {
         return articleRepository.findById(request.getArticleId()).map(a ->
         {
             ArticleDetailsDto detailsDto = mapperFacade.map(a, ArticleDetailsDto.class);
-            if (ObjectUtils.isEmpty(request.getUserId())) return detailsDto;
-            LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndTypeAndUserIdAndIsCancelled(
+            if (ObjectUtils.isEmpty(request.getUserId()))
+                return detailsDto;
+            LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndLikeTypeAndUserIdAndIsCancelled(
                     request.getArticleId(), LikeInfo.ARTICLE_TYPE, request.getUserId(), false);
             if (!ObjectUtils.isEmpty(likeInfo)) {
-                switch (likeInfo.getLikeType()) {
+                switch (likeInfo.getLikeOrFavor()) {
                     case LikeInfo.LIKE:
                         detailsDto.setIsLikedByUser(true);
                         break;
