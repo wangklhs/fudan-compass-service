@@ -99,5 +99,9 @@ public class ArticleService {
         });
     }
 
+    public void delete(Long id) {
+        articleRepository.deleteById(id);
+    }
+
 
 }

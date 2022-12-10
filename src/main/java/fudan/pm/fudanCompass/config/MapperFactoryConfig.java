@@ -51,16 +51,8 @@ public class MapperFactoryConfig {
                 .byDefault()
                 .register();
 
-        mapperFactory.classMap(Rating.class, RatingDetailsDto.class)
-                .byDefault()
-                .register();
-
         mapperFactory.classMap(ArticleRequest.class, Article.class)
                 .fieldMap("tags", "tags").converter("stringListConverter").add()
-                .byDefault()
-                .register();
-
-        mapperFactory.classMap(RatingRequest.class, Rating.class)
                 .byDefault()
                 .register();
 

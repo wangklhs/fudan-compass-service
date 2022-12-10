@@ -16,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.criteria.Predicate;
 import java.util.LinkedList;
@@ -31,40 +33,31 @@ public class RatingService {
     @Autowired
     LikeInfoRepository likeInfoRepository;
 
-    public Page<RatingOutputDto> search(SearchRatingsRequest request){
+    public Page<RatingOutputDto> search(SearchRatingsRequest request) {
         Specification<Rating> specification = (root, query, cb) -> {
             List<Predicate> predicates = new LinkedList<>();
-            if (!ObjectUtils.isEmpty(request.getSearchContent())){
+            if (!ObjectUtils.isEmpty(request.getSearchContent())) {
                 Predicate[] arr = new Predicate[]{
-                        cb.like(root.get("title"), "%"+request.getSearchContent()+"%"),
-                        cb.like(root.get("content"), "%"+request.getSearchContent()+"%")
+                        cb.like(root.get("title"), "%" + request.getSearchContent() + "%"),
+                        cb.like(root.get("content"), "%" + request.getSearchContent() + "%")
                 };
                 predicates.add(cb.or(arr));
             }
-            if (!ObjectUtils.isEmpty(request.getCourseName())){
-                Predicate[] arr = new Predicate[]{
-                        cb.like(root.get("courseName"), "%"+request.getCourseName()+"%")
-                };
-                predicates.add(cb.or(arr));
+            if (!ObjectUtils.isEmpty(request.getCourseName())) {
+                predicates.add(cb.like(root.get("courseName"), "%" + request.getCourseName() + "%"));
             }
-            if (!ObjectUtils.isEmpty(request.getCourseType())){
-                Predicate[] arr = new Predicate[]{
-                        cb.like(root.get("courseType"), "%"+request.getCourseType()+"%")
-                };
-                predicates.add(cb.or(arr));
+            if (!ObjectUtils.isEmpty(request.getCourseType())) {
+                predicates.add(cb.like(root.get("courseType"), "%" + request.getCourseType() + "%"));
             }
-            if (!ObjectUtils.isEmpty(request.getRelatedMajor())){
-                Predicate[] arr = new Predicate[]{
-                        cb.like(root.get("relatedMajor"), "%"+request.getRelatedMajor()+"%")
-                };
-                predicates.add(cb.or(arr));
+            if (!ObjectUtils.isEmpty(request.getRelatedMajor())) {
+                predicates.add(cb.like(root.get("relatedMajor"), "%" + request.getRelatedMajor() + "%"));
             }
 
             Predicate[] arr = new Predicate[predicates.size()];
             query.where(cb.and(predicates.toArray(arr)));
-            if (!ObjectUtils.isEmpty(request.getOrderBy()) && request.getOrderBy() == 1){
+            if (!ObjectUtils.isEmpty(request.getOrderBy()) && request.getOrderBy() == 1) {
                 query.orderBy(cb.desc(root.get("likeNum")), cb.desc(root.get("updateTime")));
-            }else {
+            } else {
                 query.orderBy(cb.desc(root.get("updateTime")));
             }
             return query.getRestriction();
@@ -75,17 +68,17 @@ public class RatingService {
     }
 
 
-    public RatingDetailsDto getDetails(RatingDetailsRequest request){
+    public RatingDetailsDto getDetails(RatingDetailsRequest request) {
         return ratingRepository.findById(request.getRatingId()).map(a ->
         {
             RatingDetailsDto detailsDto = mapperFacade.map(a, RatingDetailsDto.class);
-            if (ObjectUtils.isEmpty(request.getUserId())){
+            if (ObjectUtils.isEmpty(request.getUserId())) {
                 return detailsDto;
             }
             LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndLikeTypeAndUserId(
                     request.getRatingId(), LikeInfo.RATING_TYPE, request.getUserId());
-            if (!ObjectUtils.isEmpty(likeInfo)){
-                switch (likeInfo.getLikeOrFavor()){
+            if (!ObjectUtils.isEmpty(likeInfo)) {
+                switch (likeInfo.getLikeOrFavor()) {
                     case LikeInfo.LIKE:
                         detailsDto.setIsLikedByUser(true);
                         break;
@@ -106,11 +99,15 @@ public class RatingService {
         ratingRepository.save(rating);
     }
 
-    public void update(Long id, RatingRequest request){
+    public void update(Long id, RatingRequest request) {
         ratingRepository.findById(id).ifPresent(a -> {
             a.update(request);
             ratingRepository.save(a);
         });
+    }
+
+    public void delete(Long id) {
+        ratingRepository.deleteById(id);
     }
 
 }

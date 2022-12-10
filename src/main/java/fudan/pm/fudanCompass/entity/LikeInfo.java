@@ -35,14 +35,15 @@ public class LikeInfo {
                     likeOrFavor = LIKE_AND_FAVOR;
                     return true;
             }
-        }
-        switch (likeOrFavor) {
-            case LIKE:
-                likeOrFavor = NOTHING;
-                return true;
-            case LIKE_AND_FAVOR:
-                likeOrFavor = FAVOR;
-                return true;
+        } else {
+            switch (likeOrFavor) {
+                case LIKE:
+                    likeOrFavor = NOTHING;
+                    return true;
+                case LIKE_AND_FAVOR:
+                    likeOrFavor = FAVOR;
+                    return true;
+            }
         }
         return false;
     }
@@ -57,14 +58,15 @@ public class LikeInfo {
                     likeOrFavor = LIKE_AND_FAVOR;
                     return true;
             }
-        }
-        switch (likeOrFavor) {
-            case FAVOR:
-                likeOrFavor = NOTHING;
-                return true;
-            case LIKE_AND_FAVOR:
-                likeOrFavor = LIKE;
-                return true;
+        } else {
+            switch (likeOrFavor) {
+                case FAVOR:
+                    likeOrFavor = NOTHING;
+                    return true;
+                case LIKE_AND_FAVOR:
+                    likeOrFavor = LIKE;
+                    return true;
+            }
         }
         return false;
     }

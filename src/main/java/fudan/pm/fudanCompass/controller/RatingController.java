@@ -40,4 +40,9 @@ public class RatingController {
                              @RequestBody RatingRequest request){
         ratingService.update(id, request);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteRating(@PathVariable("id") Long id){
+        ratingService.delete(id);
+    }
 }

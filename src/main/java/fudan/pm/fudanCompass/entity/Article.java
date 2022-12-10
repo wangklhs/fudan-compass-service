@@ -23,7 +23,6 @@ public class Article {
     private String content;
 
     private Long likeNum = 0L;
-    private Boolean favoured = false;
     private LocalDateTime createTime = LocalDateTime.now();
     private LocalDateTime updateTime = LocalDateTime.now();
 
