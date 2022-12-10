@@ -1,17 +1,11 @@
 package fudan.pm.fudanCompass.config;
 
-import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
-import fudan.pm.fudanCompass.dto.ArticleOutputDto;
-import fudan.pm.fudanCompass.dto.RatingDetailsDto;
-import fudan.pm.fudanCompass.dto.RatingOutputDto;
+import fudan.pm.fudanCompass.dto.*;
 import fudan.pm.fudanCompass.dto.request.ArticleRequest;
 import fudan.pm.fudanCompass.dto.request.FavourRequest;
 import fudan.pm.fudanCompass.dto.request.LikeRequest;
 import fudan.pm.fudanCompass.dto.request.RatingRequest;
-import fudan.pm.fudanCompass.entity.Article;
-import fudan.pm.fudanCompass.entity.Comment;
-import fudan.pm.fudanCompass.entity.LikeInfo;
-import fudan.pm.fudanCompass.entity.Rating;
+import fudan.pm.fudanCompass.entity.*;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
@@ -63,6 +57,11 @@ public class MapperFactoryConfig {
 
         mapperFactory.classMap(FavourRequest.class, LikeInfo.class)
                 .field("id", "likeId")
+                .byDefault()
+                .register();
+
+        mapperFactory.classMap(User.class, UserDto.class)
+                .field("id", "userId")
                 .byDefault()
                 .register();
 

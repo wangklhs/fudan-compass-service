@@ -2,10 +2,7 @@ package fudan.pm.fudanCompass.service;
 
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.RatingOutputDto;
-import fudan.pm.fudanCompass.dto.request.GetUserMajorRequest;
 import fudan.pm.fudanCompass.dto.request.SetUserMajorRequest;
-import fudan.pm.fudanCompass.dto.request.UserFavourArticlesRequest;
-import fudan.pm.fudanCompass.dto.request.UserFavourRatingsRequest;
 import fudan.pm.fudanCompass.entity.Article;
 import fudan.pm.fudanCompass.entity.LikeInfo;
 import fudan.pm.fudanCompass.entity.Rating;
@@ -35,11 +32,11 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<ArticleOutputDto> getFavourArticles(UserFavourArticlesRequest request) throws Exception {
+    public List<ArticleOutputDto> getFavourArticles(Long id) throws Exception {
         List<ArticleOutputDto> articleOutputDtos = new LinkedList<>();
         List<LikeInfo> likeInfos = likeInfoRepository.findAll();
         for (LikeInfo likeinfo: likeInfos){
-            if ((likeinfo.getUserId() == request.getUserId())
+            if ((likeinfo.getUserId() == id)
                     && (likeinfo.getLikeType() == LikeInfo.ARTICLE_TYPE)
                     && ((likeinfo.getLikeOrFavor() == LikeInfo.FAVOR) || (likeinfo.getLikeOrFavor() == LikeInfo.LIKE_AND_FAVOR))) {
                 Article a = articleRepository.findById(likeinfo.getLikeId()).orElseThrow(Exception::new);
@@ -50,11 +47,11 @@ public class UserService {
         return articleOutputDtos;
     }
 
-    public List<RatingOutputDto> getFavourRatings(UserFavourRatingsRequest request) throws Exception {
+    public List<RatingOutputDto> getFavourRatings(Long id) throws Exception {
         List<RatingOutputDto> ratingOutputDtos = new LinkedList<>();
         List<LikeInfo> likeInfos = likeInfoRepository.findAll();
         for (LikeInfo likeinfo: likeInfos){
-            if ((likeinfo.getUserId() == request.getUserId())
+            if ((likeinfo.getUserId() == id)
                     && (likeinfo.getLikeType() == LikeInfo.RATING_TYPE)
                     && ((likeinfo.getLikeOrFavor() == LikeInfo.FAVOR) || (likeinfo.getLikeOrFavor() == LikeInfo.LIKE_AND_FAVOR))) {
                 Rating r = ratingRepository.findById(likeinfo.getLikeId()).orElseThrow(Exception::new);
@@ -71,8 +68,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String getUserMajor(GetUserMajorRequest request) throws Exception {
-        User user = userRepository.findById(request.getUserId()).orElseThrow(Exception::new);
+    public String getUserMajor(Long id) throws Exception {
+        User user = userRepository.findById(id).orElseThrow(Exception::new);
         return user.getMajor();
     }
 }
