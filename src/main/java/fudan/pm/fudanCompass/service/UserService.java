@@ -2,6 +2,7 @@ package fudan.pm.fudanCompass.service;
 
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.RatingOutputDto;
+import fudan.pm.fudanCompass.dto.request.GetUserMajorRequest;
 import fudan.pm.fudanCompass.dto.request.SetUserMajorRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourArticlesRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourRatingsRequest;
@@ -68,5 +69,10 @@ public class UserService {
         User user = userRepository.findById(request.getUserId()).orElseThrow(Exception::new);
         user.setMajor(request.getMajor());
         userRepository.save(user);
+    }
+
+    public String getUserMajor(GetUserMajorRequest request) throws Exception {
+        User user = userRepository.findById(request.getUserId()).orElseThrow(Exception::new);
+        return user.getMajor();
     }
 }

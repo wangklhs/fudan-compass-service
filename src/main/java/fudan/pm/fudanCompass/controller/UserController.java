@@ -3,15 +3,13 @@ package fudan.pm.fudanCompass.controller;
 
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.RatingOutputDto;
+import fudan.pm.fudanCompass.dto.request.GetUserMajorRequest;
 import fudan.pm.fudanCompass.dto.request.SetUserMajorRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourArticlesRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourRatingsRequest;
 import fudan.pm.fudanCompass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +33,10 @@ public class UserController {
     @PostMapping("/setUserMajor")
     public void setUserMajor(@RequestBody SetUserMajorRequest request) throws Exception {
         userService.setUserMajor(request);
+    }
+
+    @GetMapping("/getUserMajor")
+    public String getUserMajor(@RequestBody GetUserMajorRequest request) throws Exception {
+        return userService.getUserMajor(request);
     }
 }
