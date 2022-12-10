@@ -2,14 +2,17 @@ package fudan.pm.fudanCompass.service;
 
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.RatingOutputDto;
+import fudan.pm.fudanCompass.dto.request.SetUserMajorRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourArticlesRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourRatingsRequest;
 import fudan.pm.fudanCompass.entity.Article;
 import fudan.pm.fudanCompass.entity.LikeInfo;
 import fudan.pm.fudanCompass.entity.Rating;
+import fudan.pm.fudanCompass.entity.User;
 import fudan.pm.fudanCompass.repository.ArticleRepository;
 import fudan.pm.fudanCompass.repository.LikeInfoRepository;
 import fudan.pm.fudanCompass.repository.RatingRepository;
+import fudan.pm.fudanCompass.repository.UserRepository;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,8 @@ public class UserService {
     RatingRepository ratingRepository;
     @Autowired
     LikeInfoRepository likeInfoRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public List<ArticleOutputDto> getFavourArticles(UserFavourArticlesRequest request) throws Exception {
         List<ArticleOutputDto> articleOutputDtos = new LinkedList<>();
@@ -57,5 +62,11 @@ public class UserService {
             }
         }
         return ratingOutputDtos;
+    }
+
+    public void setUserMajor(SetUserMajorRequest request) throws Exception {
+        User user = userRepository.findById(request.getUserId()).orElseThrow(Exception::new);
+        user.setMajor(request.getMajor());
+        userRepository.save(user);
     }
 }

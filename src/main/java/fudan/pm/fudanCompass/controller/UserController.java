@@ -3,6 +3,7 @@ package fudan.pm.fudanCompass.controller;
 
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
 import fudan.pm.fudanCompass.dto.RatingOutputDto;
+import fudan.pm.fudanCompass.dto.request.SetUserMajorRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourArticlesRequest;
 import fudan.pm.fudanCompass.dto.request.UserFavourRatingsRequest;
 import fudan.pm.fudanCompass.service.UserService;
@@ -29,5 +30,10 @@ public class UserController {
     @PostMapping("/getUserFavourRatings")
     public List<RatingOutputDto> getFavourRatings(@RequestBody UserFavourRatingsRequest request) throws Exception {
         return userService.getFavourRatings(request);
+    }
+
+    @PostMapping("/setUserMajor")
+    public void setUserMajor(@RequestBody SetUserMajorRequest request) throws Exception {
+        userService.setUserMajor(request);
     }
 }
