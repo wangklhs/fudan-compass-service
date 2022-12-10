@@ -47,14 +47,25 @@ public class LikeInfo {
         return false;
     }
 
-    public void favour() {
-        switch (likeOrFavor) {
-            case NOTHING:
-                likeOrFavor = FAVOR;
-                break;
-            case LIKE:
-                likeOrFavor = LIKE_AND_FAVOR;
-                break;
+    public boolean favour(boolean isFavour) {
+        if (isFavour) {
+            switch (likeOrFavor) {
+                case NOTHING:
+                    likeOrFavor = FAVOR;
+                    return true;
+                case LIKE:
+                    likeOrFavor = LIKE_AND_FAVOR;
+                    return true;
+            }
         }
+        switch (likeOrFavor) {
+            case FAVOR:
+                likeOrFavor = NOTHING;
+                return true;
+            case LIKE_AND_FAVOR:
+                likeOrFavor = LIKE;
+                return true;
+        }
+        return false;
     }
 }

@@ -28,21 +28,29 @@ public class FavourService {
     @Transactional(rollbackFor = Exception.class)
     public void favour(FavourRequest request) throws Exception {
         LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndUserId(request.getId(), request.getUserId());
+        boolean needFavour;
+        boolean needNotFavour = false;
         if (!ObjectUtils.isEmpty(likeInfo)){
-            likeInfo.favour();
+            boolean temp = likeInfo.favour(request.getIsFavour());
+            needFavour = request.getIsFavour() && temp;
+            needNotFavour = !request.getIsFavour() && temp;
         }else {
             likeInfo = mapperFacade.map(request, LikeInfo.class);
-            likeInfo.setLikeOrFavor(LikeInfo.FAVOR);
+            if (needFavour = request.getIsFavour()){
+                likeInfo.setLikeOrFavor(LikeInfo.FAVOR);
+            }
         }
 
-        if (request.getFavourType() == LikeInfo.ARTICLE_TYPE){
-            Article a = articleRepository.findById(request.getId()).orElseThrow(Exception::new);
-            a.setFavoured(true);
-            articleRepository.save(a);
-        }else {
-            Rating r = ratingRepository.findById(request.getId()).orElseThrow(Exception::new);
-            r.setFavoured(true);
-            ratingRepository.save(r);
+        if (needFavour || needNotFavour) {
+            if (request.getFavourType() == LikeInfo.ARTICLE_TYPE){
+                Article a = articleRepository.findById(request.getId()).orElseThrow(Exception::new);
+                a.setFavoured(needFavour);
+                articleRepository.save(a);
+            }else {
+                Rating r = ratingRepository.findById(request.getId()).orElseThrow(Exception::new);
+                r.setFavoured(needFavour);
+                ratingRepository.save(r);
+            }
         }
     }
 }
