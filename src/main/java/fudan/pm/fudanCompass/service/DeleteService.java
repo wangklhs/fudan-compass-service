@@ -1,7 +1,6 @@
 package fudan.pm.fudanCompass.service;
 
 import fudan.pm.fudanCompass.dto.request.DeleteRequest;
-import fudan.pm.fudanCompass.entity.LikeInfo;
 import fudan.pm.fudanCompass.repository.ArticleRepository;
 import fudan.pm.fudanCompass.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,12 @@ public class DeleteService {
     RatingRepository ratingRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(DeleteRequest request) {
-        if (request.getDeleteType() == LikeInfo.ARTICLE_TYPE){
-            articleRepository.deleteById(request.getId());
-        }else {
-            ratingRepository.deleteById(request.getId());
-        }
+    public void deleteArticle(DeleteRequest request) {
+        articleRepository.deleteById(request.getId());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRating(DeleteRequest request) {
+        ratingRepository.deleteById(request.getId());
     }
 }

@@ -15,8 +15,13 @@ public class DeleteController {
     @Autowired
     DeleteService deleteService;
 
-    @PostMapping
-    public void delete(@RequestBody DeleteRequest request) {
-        deleteService.delete(request);
+    @PostMapping("/deleteArticle")
+    public void deleteArticle(@RequestBody DeleteRequest request) {
+        deleteService.deleteArticle(request);
+    }
+
+    @PostMapping("/deleteRating")
+    public void deleteRating(@RequestBody DeleteRequest request) {
+        deleteService.deleteRating(request);
     }
 }
