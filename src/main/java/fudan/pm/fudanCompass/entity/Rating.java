@@ -16,7 +16,6 @@ public class Rating {
 
     private Long userId;
     private String title;
-    private String tags;
 
     @Column(columnDefinition = "text")
     private String content;

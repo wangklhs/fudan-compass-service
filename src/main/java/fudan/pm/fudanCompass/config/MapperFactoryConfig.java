@@ -2,6 +2,8 @@ package fudan.pm.fudanCompass.config;
 
 import fudan.pm.fudanCompass.dto.ArticleDetailsDto;
 import fudan.pm.fudanCompass.dto.ArticleOutputDto;
+import fudan.pm.fudanCompass.dto.RatingDetailsDto;
+import fudan.pm.fudanCompass.dto.RatingOutputDto;
 import fudan.pm.fudanCompass.dto.request.ArticleRequest;
 import fudan.pm.fudanCompass.dto.request.FavourRequest;
 import fudan.pm.fudanCompass.dto.request.LikeRequest;
@@ -39,13 +41,26 @@ public class MapperFactoryConfig {
                 .byDefault()
                 .register();
 
+        mapperFactory.classMap(Rating.class, RatingOutputDto.class)
+                .fieldMap("comments", "comments").converter("commentsTrimConverter").add()
+                .byDefault()
+                .register();
+
         mapperFactory.classMap(Article.class, ArticleDetailsDto.class)
                 .fieldMap("tags", "tags").converter("stringListConverter").add()
                 .byDefault()
                 .register();
 
+        mapperFactory.classMap(Rating.class, RatingDetailsDto.class)
+                .byDefault()
+                .register();
+
         mapperFactory.classMap(ArticleRequest.class, Article.class)
                 .fieldMap("tags", "tags").converter("stringListConverter").add()
+                .byDefault()
+                .register();
+
+        mapperFactory.classMap(RatingRequest.class, Rating.class)
                 .byDefault()
                 .register();
 
