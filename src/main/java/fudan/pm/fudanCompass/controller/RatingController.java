@@ -9,10 +9,7 @@ import fudan.pm.fudanCompass.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ratings")
@@ -36,5 +33,11 @@ public class RatingController {
     @PostMapping
     public void postRating(@RequestBody RatingRequest request) {
         ratingService.post(request);
+    }
+
+    @PutMapping("/{id}")
+    public void updateRating(@PathVariable("id") Long id,
+                             @RequestBody RatingRequest request){
+        ratingService.update(id, request);
     }
 }

@@ -106,4 +106,11 @@ public class RatingService {
         ratingRepository.save(rating);
     }
 
+    public void update(Long id, RatingRequest request){
+        ratingRepository.findById(id).ifPresent(a -> {
+            a.update(request);
+            ratingRepository.save(a);
+        });
+    }
+
 }
