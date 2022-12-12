@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.criteria.Predicate;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RatingService {
@@ -104,6 +103,38 @@ public class RatingService {
             a.update(request);
             ratingRepository.save(a);
         });
+    }
+
+    public HashMap getPopCourseTypes(){
+        HashMap hashMap = new HashMap();
+        List<Rating> ratings = ratingRepository.findAll();
+        if (ratings == null){
+            hashMap.put("message","暂时无推荐课程");
+            return hashMap;
+        }
+        HashMap hashMap1 = getRatingCourse(ratings);
+        hashMap1.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(hashMap1.entrySet());
+        Collections.sort(list,(o1, o2) -> (o2.getValue() - o1.getValue()));
+        String[] popCourses = new String[2];
+        popCourses[0] = list.get(0).getKey();
+        popCourses[1] = list.get(1).getKey();
+        hashMap.put("popCourseTypes",popCourses);
+        hashMap.put("message","success");
+        return hashMap;
+    }
+    public HashMap getRatingCourse(List<Rating> ratings){
+        HashMap<String, Integer> hashMap = new HashMap();
+        for (Rating rating:ratings){
+            String courseType = rating.getCourseName();
+            if (hashMap.containsKey(courseType)){
+                hashMap.replace(courseType,hashMap.get(courseType)+1);
+            }
+            else {
+                hashMap.put(courseType, 1);
+            }
+        }
+        return hashMap;
     }
 
     public void delete(Long id) {

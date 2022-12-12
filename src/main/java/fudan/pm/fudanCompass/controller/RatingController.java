@@ -1,5 +1,6 @@
 package fudan.pm.fudanCompass.controller;
 
+import fudan.pm.fudanCompass.Utils.JsonResult;
 import fudan.pm.fudanCompass.dto.RatingDetailsDto;
 import fudan.pm.fudanCompass.dto.RatingOutputDto;
 import fudan.pm.fudanCompass.dto.request.RatingDetailsRequest;
@@ -39,6 +40,11 @@ public class RatingController {
     public void updateRating(@PathVariable("id") Long id,
                              @RequestBody RatingRequest request){
         ratingService.update(id, request);
+    }
+
+    @GetMapping("/getPopCourseTypes")
+    public JsonResult<?> getPopCourseTypes(){
+        return new JsonResult<>(ratingService.getPopCourseTypes());
     }
 
     @DeleteMapping("/{id}")

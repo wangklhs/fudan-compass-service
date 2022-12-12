@@ -10,4 +10,6 @@ public interface LikeInfoRepository extends JpaRepository<LikeInfo, Long> {
     LikeInfo findFirstByLikeIdAndLikeTypeAndUserId(Long likeId, Integer likeType, Long userId);
 
     LikeInfo findFirstByLikeIdAndUserId(Long likeId, Long userId);
+
+    LikeInfo findLikeInfoByUserId(Long userId);
 }
