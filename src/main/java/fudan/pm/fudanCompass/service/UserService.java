@@ -126,27 +126,37 @@ public class UserService {
         return hashMap1;
     }
 
-//    public void setUserTimeTableByDay(String day, Long userId,List<String> courses){
-//        HashMap hashMap1 = new HashMap();
-//        HashMap<String, Integer> hashMap = new HashMap<>();
-//        hashMap.put("Sun",0);
-//        hashMap.put("Mon",1);
-//        hashMap.put("Tue",2);
-//        hashMap.put("Wed",3);
-//        hashMap.put("Thu",4);
-//        hashMap.put("Fri",5);
-//        hashMap.put("Sat",6);
-//        int index = hashMap.get(day);
-//        User user = userRepository.findUserById(userId);
-//        userRepository.delete(user);
-//        String[] coursesDay = user.getCourseTable().split("&");
-//        coursesDay[index] = String.join("," ,courses.toArray());
-//        String course = "";
-//        for (String course1:coursesDay){
-//            course += "&"+course1;
-//        }
-//        user.setCourseTable(course);
-//        userRepository.save(user);
-//
-//    }
+    public HashMap setUserTimeTableByDay(String day, Long userId,List<String> courses){
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        HashMap hashMap1 = new HashMap();
+        if (courses.size()!= 14){
+            hashMap1.put("message","输入异常，请输入长度为14的字符串");
+            return hashMap1;
+        }
+        hashMap.put("Sun",0);
+        hashMap.put("Mon",1);
+        hashMap.put("Tue",2);
+        hashMap.put("Wed",3);
+        hashMap.put("Thu",4);
+        hashMap.put("Fri",5);
+        hashMap.put("Sat",6);
+        if (!hashMap.containsKey(day)){
+            hashMap1.put("message","当前输入的星期异常");
+            return  hashMap1;
+        }
+        int index = hashMap.get(day);
+        User user = userRepository.findUserById(userId);
+        String[] coursesDay = user.getCourseTable().split("&");
+        String[] coursesArray=courses.toArray(new String[courses.size()]);
+
+        coursesDay[index] = String.join("#" ,coursesArray);
+        String course = "";
+        for (String course1:coursesDay){
+            course += "&"+course1;
+        }
+        user.setCourseTable(course.substring(1));
+        userRepository.save(user);
+        hashMap1.put("message","已成功设置"+day+"的课程");
+        return hashMap1;
+    }
 }

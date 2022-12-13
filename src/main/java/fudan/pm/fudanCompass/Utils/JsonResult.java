@@ -28,5 +28,20 @@ public class JsonResult<T> {
         this.data = data;
         this.code = "0";
     }
-    // 省略 get 和 set 方法
+
+    public T getData() {
+        return data;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }
