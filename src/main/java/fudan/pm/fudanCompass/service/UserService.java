@@ -126,27 +126,27 @@ public class UserService {
         return hashMap1;
     }
 
-    public void setUserTimeTableByDay(String day, Long userId,List<String> courses){
-        HashMap hashMap1 = new HashMap();
-        HashMap<String, Integer> hashMap = new HashMap<>();
-        hashMap.put("Sun",0);
-        hashMap.put("Mon",1);
-        hashMap.put("Tue",2);
-        hashMap.put("Wed",3);
-        hashMap.put("Thu",4);
-        hashMap.put("Fri",5);
-        hashMap.put("Sat",6);
-        int index = hashMap.get(day);
-        User user = userRepository.findUserById(userId);
-        userRepository.delete(user);
-        String[] coursesDay = user.getCourseTable().split("&");
-        coursesDay[index] = String.join("," ,courses.toArray());
-        String course = "";
-        for (String course1:coursesDay){
-            course += "&"+course1;
-        }
-        user.setCourseTable(course);
-        userRepository.save(user);
-
-    }
+//    public void setUserTimeTableByDay(String day, Long userId,List<String> courses){
+//        HashMap hashMap1 = new HashMap();
+//        HashMap<String, Integer> hashMap = new HashMap<>();
+//        hashMap.put("Sun",0);
+//        hashMap.put("Mon",1);
+//        hashMap.put("Tue",2);
+//        hashMap.put("Wed",3);
+//        hashMap.put("Thu",4);
+//        hashMap.put("Fri",5);
+//        hashMap.put("Sat",6);
+//        int index = hashMap.get(day);
+//        User user = userRepository.findUserById(userId);
+//        userRepository.delete(user);
+//        String[] coursesDay = user.getCourseTable().split("&");
+//        coursesDay[index] = String.join("," ,courses.toArray());
+//        String course = "";
+//        for (String course1:coursesDay){
+//            course += "&"+course1;
+//        }
+//        user.setCourseTable(course);
+//        userRepository.save(user);
+//
+//    }
 }

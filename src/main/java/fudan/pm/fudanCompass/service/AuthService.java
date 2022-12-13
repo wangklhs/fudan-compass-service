@@ -18,7 +18,7 @@ public class AuthService {
     MapperFacade mapperFacade;
 
     public void register(AuthRequest request) throws Exception {
-        if (ObjectUtils.isEmpty(userRepository.findByUsername(request.getUsername())))
+        if (!ObjectUtils.isEmpty(userRepository.findByUsername(request.getUsername())))
             throw new Exception();
         userRepository.save(mapperFacade.map(request, User.class));
     }

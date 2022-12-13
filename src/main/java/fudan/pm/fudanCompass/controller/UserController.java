@@ -19,14 +19,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/getUserFavourArticles")
-    public List<ArticleOutputDto> getFavourArticles(@RequestBody Long id) throws Exception {
-        return userService.getFavourArticles(id);
+    @GetMapping("/getUserFavourArticles")
+    public List<ArticleOutputDto> getFavourArticles(@RequestParam Long userId) throws Exception {
+        return userService.getFavourArticles(userId);
     }
 
-    @PostMapping("/getUserFavourRatings")
-    public List<RatingOutputDto> getFavourRatings(@RequestBody Long id) throws Exception {
-        return userService.getFavourRatings(id);
+    @GetMapping("/getUserFavourRatings")
+    public List<RatingOutputDto> getFavourRatings(@RequestParam Long userId) throws Exception {
+        return userService.getFavourRatings(userId);
     }
 
     @PostMapping("/setUserMajor")
@@ -35,11 +35,11 @@ public class UserController {
     }
 
     @GetMapping("/getUserMajor")
-    public String getUserMajor(@RequestBody Long id) throws Exception {
-        return userService.getUserMajor(id);
+    public String getUserMajor(@RequestParam Long userId) throws Exception {
+        return userService.getUserMajor(userId);
     }
 
-    @PostMapping("/getInfo")
+    @GetMapping("/getInfo")
     public JsonResult<?> getInfo(@RequestParam Long userId){
         HashMap hashMap = userService.getInfo(userId);
         return new JsonResult<>(hashMap);
@@ -49,8 +49,8 @@ public class UserController {
         HashMap hashMap = userService.getUserTimeTableByDay(day,userId);
         return new JsonResult<>(hashMap);
     }
-    @PostMapping("setUserTimeTableByDay")
-    public void setUserTimeTableByDay(@RequestParam Long userId, @RequestParam String day, @RequestParam List<String> courses){
-        userService.setUserTimeTableByDay(day,userId,courses);
-    }
+//    @PostMapping("setUserTimeTableByDay")
+//    public void setUserTimeTableByDay(@RequestParam Long userId, @RequestParam String day, @RequestParam List<String> courses){
+//        userService.setUserTimeTableByDay(day,userId,courses);
+//    }
 }
