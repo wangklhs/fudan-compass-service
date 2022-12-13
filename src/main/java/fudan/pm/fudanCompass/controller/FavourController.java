@@ -16,7 +16,7 @@ public class FavourController {
     FavourService favourService;
 
     @PostMapping
-    public void favour(@RequestBody FavourRequest request) {
+    public void favour(@RequestBody FavourRequest request) throws Exception {
         favourService.favour(request);
     }
 

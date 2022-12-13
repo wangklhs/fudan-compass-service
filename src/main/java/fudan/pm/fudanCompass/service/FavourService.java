@@ -25,8 +25,10 @@ public class FavourService {
     @Autowired
     RatingRepository ratingRepository;
 
-    public void favour(FavourRequest request) {
-        LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndUserId(request.getId(), request.getUserId());
+    public void favour(FavourRequest request) throws Exception {
+        if (ObjectUtils.isEmpty(request.getFavourType()))
+            throw new Exception();
+        LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndLikeTypeAndUserId(request.getId(), request.getFavourType(), request.getUserId());
         if (!ObjectUtils.isEmpty(likeInfo)) {
             likeInfo.favour(request.getIsFavour());
         } else {

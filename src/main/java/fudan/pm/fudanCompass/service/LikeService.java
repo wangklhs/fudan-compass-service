@@ -27,7 +27,9 @@ public class LikeService {
 
     @Transactional(rollbackFor = Exception.class)
     public void like(LikeRequest request) throws Exception {
-        LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndUserId(request.getId(), request.getUserId());
+        if (ObjectUtils.isEmpty(request.getLikeType()))
+            throw new Exception();
+        LikeInfo likeInfo = likeInfoRepository.findFirstByLikeIdAndLikeTypeAndUserId(request.getId(), request.getLikeType(), request.getUserId());
         boolean needAdd;
         boolean needReduce = false;
         if (!ObjectUtils.isEmpty(likeInfo)) {

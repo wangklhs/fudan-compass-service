@@ -18,12 +18,16 @@ public class AuthService {
     MapperFacade mapperFacade;
 
     public void register(AuthRequest request) throws Exception {
+        if (ObjectUtils.isEmpty(request.getUsername()))
+            throw new Exception();
         if (!ObjectUtils.isEmpty(userRepository.findByUsername(request.getUsername())))
             throw new Exception();
         userRepository.save(mapperFacade.map(request, User.class));
     }
 
     public UserDto login(AuthRequest request) throws Exception {
+        if (ObjectUtils.isEmpty(request.getUsername()))
+            throw new Exception();
         User user = userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword());
         if (ObjectUtils.isEmpty(user))
             throw new Exception();

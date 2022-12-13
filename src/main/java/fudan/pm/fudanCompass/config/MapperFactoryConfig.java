@@ -57,6 +57,7 @@ public class MapperFactoryConfig {
 
         mapperFactory.classMap(FavourRequest.class, LikeInfo.class)
                 .field("id", "likeId")
+                .field("favourType", "likeType")
                 .byDefault()
                 .register();
 
