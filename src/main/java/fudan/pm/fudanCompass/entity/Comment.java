@@ -2,6 +2,8 @@ package fudan.pm.fudanCompass.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fudan.pm.fudanCompass.FudanCompassApplication;
+import fudan.pm.fudanCompass.repository.UserRepository;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -38,5 +40,10 @@ public class Comment {
     @JoinTable(name = "rating_comment",
             joinColumns = {@JoinColumn(name = "comment_id")}, inverseJoinColumns = {@JoinColumn(name = "rating_id")})
     private Rating rating;
+
+    public String getUsername() {
+        UserRepository userRepository = FudanCompassApplication.applicationContext.getBean(UserRepository.class);
+        return userRepository.findById(userId).map(User::getUsername).orElse(null);
+    }
 
 }
