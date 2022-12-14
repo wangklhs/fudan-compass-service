@@ -14,6 +14,7 @@ public class ArticleOutputDto {
 
     private Long id;
     private Long userId;
+    private String username;
     private String title;
     private String content;
     private List<String> tags;

@@ -12,6 +12,7 @@ public class RatingOutputDto {
 
     private Long id;
     private Long userId;
+    private String username;
     private String title;
     private String content;
     private String courseName;

@@ -14,6 +14,7 @@ public class RatingDetailsDto {
 
     private Long id;
     private Long userId;
+    private String username;
     private String courseName;
     private String courseType;
     private String relatedMajor;
